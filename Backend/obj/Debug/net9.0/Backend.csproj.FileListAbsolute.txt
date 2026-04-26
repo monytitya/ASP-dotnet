@@ -1,0 +1,102 @@
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.csproj.AssemblyReference.cache
+D:\ASP dotnet\Backend\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.GeneratedMSBuildEditorConfig.editorconfig
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.AssemblyInfoInputs.cache
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.AssemblyInfo.cs
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.csproj.CoreCompileInputs.cache
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.MvcApplicationPartsAssemblyInfo.cs
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.MvcApplicationPartsAssemblyInfo.cache
+D:\ASP dotnet\Backend\bin\Debug\net9.0\appsettings.Development.json
+D:\ASP dotnet\Backend\bin\Debug\net9.0\appsettings.json
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Backend.staticwebassets.endpoints.json
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Backend.exe
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Backend.deps.json
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Backend.runtimeconfig.json
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Backend.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Backend.pdb
+D:\ASP dotnet\Backend\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Google.Protobuf.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\K4os.Compression.LZ4.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\K4os.Compression.LZ4.Streams.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\K4os.Hash.xxHash.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Microsoft.OpenApi.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\MySql.Data.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\System.Configuration.ConfigurationManager.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\System.Security.Permissions.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\System.Windows.Extensions.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\ZstdSharp.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\comerr64.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\gssapi64.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\k5sprt64.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\krb5_64.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\krbcc64.dll
+D:\ASP dotnet\Backend\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
+D:\ASP dotnet\Backend\obj\Debug\net9.0\rjimswa.dswa.cache.json
+D:\ASP dotnet\Backend\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+D:\ASP dotnet\Backend\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+D:\ASP dotnet\Backend\obj\Debug\net9.0\scopedcss\bundle\Backend.styles.css
+D:\ASP dotnet\Backend\obj\Debug\net9.0\staticwebassets.build.json
+D:\ASP dotnet\Backend\obj\Debug\net9.0\staticwebassets.build.json.cache
+D:\ASP dotnet\Backend\obj\Debug\net9.0\staticwebassets.development.json
+D:\ASP dotnet\Backend\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.csproj.Up2Date
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.dll
+D:\ASP dotnet\Backend\obj\Debug\net9.0\refint\Backend.dll
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.pdb
+D:\ASP dotnet\Backend\obj\Debug\net9.0\Backend.genruntimeconfig.cache
+D:\ASP dotnet\Backend\obj\Debug\net9.0\ref\Backend.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\appsettings.Development.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\appsettings.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.staticwebassets.endpoints.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.exe
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.deps.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.runtimeconfig.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.pdb
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Google.Protobuf.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\K4os.Compression.LZ4.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\K4os.Compression.LZ4.Streams.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\K4os.Hash.xxHash.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Microsoft.OpenApi.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\MySql.Data.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\System.Configuration.ConfigurationManager.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\System.Security.Permissions.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\System.Windows.Extensions.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\ZstdSharp.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\comerr64.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\gssapi64.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\k5sprt64.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\krb5_64.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\runtimes\win-x64\native\krbcc64.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.csproj.AssemblyReference.cache
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.GeneratedMSBuildEditorConfig.editorconfig
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.AssemblyInfoInputs.cache
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.AssemblyInfo.cs
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.csproj.CoreCompileInputs.cache
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.MvcApplicationPartsAssemblyInfo.cs
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.MvcApplicationPartsAssemblyInfo.cache
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\rjimswa.dswa.cache.json
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\scopedcss\bundle\Backend.styles.css
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\staticwebassets.build.json
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\staticwebassets.build.json.cache
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\staticwebassets.development.json
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.csproj.Up2Date
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.dll
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\refint\Backend.dll
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.pdb
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.genruntimeconfig.cache
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\ref\Backend.dll

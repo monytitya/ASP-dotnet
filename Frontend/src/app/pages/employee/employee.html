@@ -1,0 +1,281 @@
+<div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+   
+   <!-- DASHBOARD HEADER -->
+   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+         <h2 class="text-3xl font-black text-slate-900 tracking-tight">Employee Management</h2>
+         <p class="text-slate-500 font-medium mt-1">Monitor workforce distribution and financial metrics.</p>
+      </div>
+      <div class="flex items-center gap-3">
+         <div class="flex items-center bg-white border border-slate-200 rounded-xl px-4 py-2.5 shadow-sm">
+            <span class="text-slate-400 mr-2 text-sm font-bold">📅 This Month</span>
+            <span class="text-slate-300">▼</span>
+         </div>
+         <button (click)="addNew()"
+            class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-200 active:scale-95 flex items-center gap-2">
+            <span class="text-xl">+</span> Export
+         </button>
+      </div>
+   </div>
+
+   <!-- STATS CARDS -->
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Total Employees -->
+      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+         <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 text-xl group-hover:scale-110 transition-transform">
+               👥
+            </div>
+            <span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-lg">↑ 12.5%</span>
+         </div>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Total Employees</h3>
+         <p class="text-3xl font-black text-slate-900">{{ totalEmployees() }} <span class="text-slate-400 text-lg font-medium">People</span></p>
+      </div>
+
+      <!-- Total Payroll -->
+      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+         <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-xl group-hover:scale-110 transition-transform">
+               💰
+            </div>
+            <span class="text-emerald-500 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-lg">↑ 8.2%</span>
+         </div>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Total Payroll</h3>
+         <p class="text-3xl font-black text-slate-900">{{ totalSalary() | currency:'USD':'symbol':'1.0-0' }}</p>
+      </div>
+
+      <!-- Avg Salary -->
+      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+         <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 text-xl group-hover:scale-110 transition-transform">
+               📈
+            </div>
+            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded-lg">Stable</span>
+         </div>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Avg. Salary</h3>
+         <p class="text-3xl font-black text-slate-900">{{ avgSalary() | currency:'USD':'symbol':'1.0-0' }}</p>
+      </div>
+
+      <!-- Highest Salary -->
+      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+         <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 text-xl group-hover:scale-110 transition-transform">
+               🏆
+            </div>
+            <span class="text-amber-500 text-xs font-bold bg-amber-50 px-2 py-1 rounded-lg">Peak</span>
+         </div>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Highest Paid</h3>
+         <p class="text-3xl font-black text-slate-900">{{ highestSalary() | currency:'USD':'symbol':'1.0-0' }}</p>
+      </div>
+   </div>
+
+   <!-- MAIN GRID -->
+   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- EMPLOYEE TABLE -->
+      <div class="lg:col-span-2 bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+         <div class="p-8 border-b border-slate-100 flex justify-between items-center">
+            <h3 class="text-xl font-black text-slate-900 flex items-center gap-3">
+               <span class="w-2 h-6 bg-blue-600 rounded-full"></span>
+               Employee Overview
+            </h3>
+            <div class="flex items-center gap-2">
+               <button (click)="loadData()" class="p-2 hover:bg-slate-50 rounded-lg text-slate-400 transition-colors">🔄</button>
+               <button class="text-blue-600 text-sm font-bold hover:underline">See All →</button>
+            </div>
+         </div>
+
+         @if (loading) {
+            <div class="flex-1 flex flex-col items-center justify-center py-20 gap-4">
+               <div class="w-12 h-12 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
+               <p class="text-slate-500 font-bold">Fetching latest data...</p>
+            </div>
+         } @else {
+            <div class="overflow-x-auto">
+               <table class="w-full text-left">
+                  <thead>
+                     <tr class="bg-slate-50/50">
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Employee</th>
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Email</th>
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Status</th>
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Salary</th>
+                        <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 text-right">Actions</th>
+                     </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-50">
+                     @for (item of paginatedData; track item.id) {
+                        <tr class="hover:bg-blue-50/30 transition-colors group">
+                           <td class="px-8 py-5">
+                              <div class="flex items-center gap-3">
+                                 <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-blue-600 text-xs">
+                                    {{ item.name.substring(0,2).toUpperCase() }}
+                                 </div>
+                                 <span class="font-bold text-slate-900">{{ item.name }}</span>
+                              </div>
+                           </td>
+                           <td class="px-8 py-5 text-slate-500 font-medium text-sm">{{ item.email }}</td>
+                           <td class="px-8 py-5">
+                              <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase rounded-lg">Active</span>
+                           </td>
+                           <td class="px-8 py-5">
+                              <span class="font-bold text-slate-900">{{ item.salary | currency }}</span>
+                           </td>
+                           <td class="px-8 py-5 text-right relative">
+                              <button (click)="toggleMenu(item, $event)" class="text-slate-300 hover:text-slate-600 p-2 transition-colors">
+                                 ⋮
+                              </button>
+                              @if (openedItem === item) {
+                                 <div class="absolute right-8 top-12 bg-white border border-slate-200 shadow-2xl rounded-2xl w-40 z-50 py-3 animate-in zoom-in-95 duration-150">
+                                    <button (click)="view(item)" class="flex items-center gap-3 w-full px-5 py-2.5 hover:bg-slate-50 transition-colors text-sm font-bold text-slate-600">
+                                       <span>👁️</span> View
+                                    </button>
+                                    <button (click)="edit(item)" class="flex items-center gap-3 w-full px-5 py-2.5 hover:bg-slate-50 transition-colors text-sm font-bold text-slate-600">
+                                       <span>✏️</span> Edit
+                                    </button>
+                                    <div class="h-px bg-slate-100 my-2"></div>
+                                    <button (click)="delete(item)" class="flex items-center gap-3 w-full px-5 py-2.5 text-red-500 hover:bg-red-50 transition-colors text-sm font-bold">
+                                       <span>🗑️</span> Delete
+                                    </button>
+                                 </div>
+                              }
+                           </td>
+                        </tr>
+                     }
+                  </tbody>
+               </table>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="p-6 mt-auto border-t border-slate-50 flex items-center justify-between">
+               <p class="text-xs font-bold text-slate-400">Page {{ page }} of {{ totalPages }}</p>
+                <div class="flex gap-2">
+                   <button (click)="prevPage()" [disabled]="page === 1" class="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-30 transition-all cursor-pointer">
+                      ←
+                   </button>
+                   @for (p of getPagesArray(); track p) {
+                      <button (click)="goToPage(p)"
+                         class="w-10 h-10 text-xs font-bold rounded-lg transition-all" 
+                         [ngClass]="p === page
+                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-100 scale-105'
+                            : 'border border-slate-200 text-slate-400 hover:bg-slate-50'">
+                         {{ p }}
+                      </button>
+                   }
+                   <button (click)="nextPage()" [disabled]="page === totalPages" class="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-30 transition-all cursor-pointer">
+                      →
+                   </button>
+                </div>
+            </div>
+         }
+      </div>
+
+      <!-- DISTRIBUTION CHART SIDEBAR -->
+      <div class="space-y-8">
+         <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center mb-8">
+               <h3 class="text-xl font-black text-slate-900">Salary Dist.</h3>
+               <span class="text-slate-400 text-xs font-bold">Monthly ▼</span>
+            </div>
+            
+            <div class="relative w-48 h-48 mx-auto mb-8 flex items-center justify-center">
+               <!-- Simple SVG Pie Chart -->
+               <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90">
+                  <circle cx="18" cy="18" r="16" fill="none" class="stroke-blue-500" stroke-width="4" stroke-dasharray="75, 100"></circle>
+                  <circle cx="18" cy="18" r="16" fill="none" class="stroke-emerald-400" stroke-width="4" stroke-dasharray="25, 100" stroke-dashoffset="-75"></circle>
+               </svg>
+               <div class="absolute flex flex-col items-center">
+                  <span class="text-2xl font-black">75%</span>
+                  <span class="text-[10px] font-bold text-slate-400 uppercase">Blue Collar</span>
+               </div>
+            </div>
+
+            <div class="space-y-4">
+               <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                     <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                     <span class="text-sm font-bold text-slate-600">Executives</span>
+                  </div>
+                  <span class="text-sm font-black text-slate-900">40%</span>
+               </div>
+               <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                     <span class="text-sm font-bold text-slate-600">Operations</span>
+                  </div>
+                  <span class="text-sm font-black text-slate-900">25%</span>
+               </div>
+               <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                     <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                     <span class="text-sm font-bold text-slate-600">IT Support</span>
+                  </div>
+                  <span class="text-sm font-black text-slate-900">15%</span>
+               </div>
+            </div>
+         </div>
+
+         <!-- PROMOTION CARD -->
+         <div class="bg-gradient-to-br from-indigo-600 to-blue-700 p-8 rounded-[2.5rem] text-white shadow-2xl shadow-blue-200">
+            <h4 class="text-xl font-black mb-2">Automate Payroll</h4>
+            <p class="text-blue-100 text-sm font-medium mb-6">Sync your local SQL server with our cloud payroll engine.</p>
+            <button class="w-full py-4 bg-white text-blue-600 font-black rounded-2xl shadow-lg hover:bg-blue-50 transition-all active:scale-95">
+               Try Now →
+            </button>
+         </div>
+      </div>
+
+   </div>
+</div>
+
+<!-- MODAL BACKDROP -->
+@if (showModal) {
+   <div class="fixed inset-0 flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
+      <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" (click)="showModal=false"></div>
+      
+      <div class="relative w-full max-w-lg bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden z-10 animate-in zoom-in-95 duration-300">
+         <div class="px-10 pt-10 pb-6">
+            <div class="flex items-center justify-between mb-2">
+               <h2 class="text-3xl font-black text-slate-900 flex items-center gap-4">
+                  <div class="w-3 h-10 bg-blue-600 rounded-full"></div>
+                  {{
+                     modalMode === 'VIEW' ? 'View Profile' : 
+                     modalMode === 'EDIT' ? 'Edit Details' : 'New Employee'
+                  }}
+               </h2>
+               <button (click)="showModal=false" class="w-10 h-10 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-full text-slate-400 transition-colors">
+                  ✕
+               </button>
+            </div>
+         </div>
+
+         <div class="px-10 pb-10 space-y-6">
+            <div class="space-y-2">
+               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
+               <input [(ngModel)]="form.name" [disabled]="modalMode === 'VIEW'" placeholder="e.g. Eleanor Pena"
+                  class="w-full bg-slate-50 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-2xl px-6 py-4 text-slate-900 font-bold outline-none transition-all disabled:opacity-50" />
+            </div>
+            <div class="space-y-2">
+               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
+               <input [(ngModel)]="form.email" [disabled]="modalMode === 'VIEW'" placeholder="eleanor@example.com"
+                  class="w-full bg-slate-50 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-2xl px-6 py-4 text-slate-900 font-bold outline-none transition-all disabled:opacity-50" />
+            </div>
+            <div class="space-y-2">
+               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Monthly Salary ($)</label>
+               <input type="number" [(ngModel)]="form.salary" [disabled]="modalMode === 'VIEW'"
+                  class="w-full bg-slate-50 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-2xl px-6 py-4 text-blue-600 text-2xl font-black outline-none transition-all disabled:opacity-50" />
+            </div>
+
+            @if (modalMode !== 'VIEW') {
+               <div class="pt-4 flex gap-4">
+                  <button (click)="showModal=false" class="flex-1 py-4 rounded-2xl font-black text-slate-400 hover:bg-slate-50 transition-all uppercase tracking-widest text-xs">
+                     Discard
+                  </button>
+                  <button (click)="save()" class="flex-[2] py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95 uppercase tracking-widest text-xs">
+                     {{ modalMode === 'EDIT' ? 'Save Changes' : 'Confirm & Add' }}
+                  </button>
+               </div>
+            }
+         </div>
+      </div>
+   </div>
+}

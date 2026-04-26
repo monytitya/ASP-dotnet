@@ -1,0 +1,81 @@
+<div class="flex h-screen bg-[#f8fafc] text-slate-800 font-sans selection:bg-blue-100 selection:text-blue-700">
+  
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-white border-r border-slate-200 flex flex-col flex-shrink-0">
+    <div class="p-6 flex items-center gap-3">
+      <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-200">
+        E
+      </div>
+      <h1 class="text-xl font-bold tracking-tight text-slate-900">EmpEase</h1>
+    </div>
+
+    <nav class="flex-1 px-4 py-4 space-y-1">
+      <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-xl transition-all group">
+        <span class="text-xl">📊</span>
+        <span class="font-semibold">Dashboard</span>
+      </a>
+      <a href="/employees" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-xl transition-all group">
+        <span class="text-xl">👥</span>
+        <span class="font-bold">Employees</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-xl transition-all group">
+        <span class="text-xl">💰</span>
+        <span class="font-semibold">Payroll</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-xl transition-all group">
+        <span class="text-xl">⚙️</span>
+        <span class="font-semibold">Settings</span>
+      </a>
+    </nav>
+
+    <div class="p-4 mt-auto">
+      <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-5 text-white shadow-xl shadow-blue-200">
+        <p class="text-sm font-medium opacity-80 mb-1">Upgrade to Pro</p>
+        <p class="text-xs opacity-60 mb-4">Get advanced analytics and reporting tools.</p>
+        <button class="w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-bold transition-all">
+          Upgrade Now
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 flex flex-col overflow-hidden">
+    
+    <!-- TOP BAR -->
+    <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8">
+      <div class="flex-1 max-w-xl">
+        <div class="relative group">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+            🔍
+          </span>
+          <input type="text" placeholder="Search employees, records..." 
+            class="w-full pl-12 pr-4 py-2.5 bg-slate-50 border-transparent border focus:border-blue-500 focus:bg-white rounded-xl outline-none transition-all text-sm font-medium">
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <button class="relative p-2 text-slate-400 hover:text-slate-600 transition-colors">
+          🔔
+          <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+        </button>
+        <div class="h-8 w-px bg-slate-200"></div>
+        <div class="flex items-center gap-3 cursor-pointer">
+          <div class="text-right">
+            <p class="text-sm font-bold text-slate-900 leading-none mb-1">Admin User</p>
+            <p class="text-xs text-slate-500 font-medium leading-none">admin@empease.com</p>
+          </div>
+          <div class="w-10 h-10 bg-slate-100 rounded-full border-2 border-white shadow-sm overflow-hidden">
+            <img src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Avatar">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <div class="flex-1 overflow-y-auto p-8">
+      <router-outlet></router-outlet>
+    </div>
+
+  </main>
+</div>
