@@ -100,3 +100,9 @@ D:\ASP_dotnet\Backend\obj\Debug\net9.0\refint\Backend.dll
 D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.pdb
 D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.genruntimeconfig.cache
 D:\ASP_dotnet\Backend\obj\Debug\net9.0\ref\Backend.dll
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.sourcelink.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\MySqlConnector.dll
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll

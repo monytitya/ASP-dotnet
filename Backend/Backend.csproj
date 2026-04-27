@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="9.7.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.2.efcore.9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
   </ItemGroup>
 

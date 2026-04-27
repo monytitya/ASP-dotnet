@@ -1,5 +1,6 @@
 using Backend.Data;
 using Backend.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,11 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IRoleService,     RoleService>();
 builder.Services.AddScoped<IAccountService,  AccountService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+
+var connStr = builder.Configuration.GetConnectionString("MySqlDb")!;
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connStr, ServerVersion.AutoDetect(connStr)));
 
 var app = builder.Build();
 
@@ -46,7 +52,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-var connStr = builder.Configuration.GetConnectionString("MySqlDb")!;
 await DbInitializer.InitializeAsync(connStr);
 
 app.Run();

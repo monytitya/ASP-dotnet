@@ -1,0 +1,290 @@
+<div class="space-y-6">
+
+  <!-- TOP WIDGETS -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- Customers Card -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm flex flex-col justify-between h-36">
+      <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-500 flex items-center justify-center mb-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      </div>
+      <div class="flex justify-between items-end">
+        <div>
+          <p class="text-slate-400 text-sm font-medium">Customers</p>
+          <h3 class="text-2xl font-black text-slate-800 mt-1">{{ totalCustomers() || '102.79' }}</h3>
+          <p class="text-[#00d084] text-xs font-bold mt-1 flex items-center gap-1">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+            7.2%
+          </p>
+        </div>
+        <svg class="w-16 h-8 text-[#00d084]/40" fill="none" viewBox="0 0 60 30" stroke="currentColor" stroke-width="2"><path d="M0 25 C 10 25, 15 5, 30 15 C 45 25, 50 10, 60 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <!-- Average Sale Card -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm flex flex-col justify-between h-36">
+      <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="flex justify-between items-end">
+        <div>
+          <p class="text-slate-400 text-sm font-medium">Average Sale</p>
+          <h3 class="text-2xl font-black text-slate-800 mt-1">{{ (totalRevenue() / (totalOrders() || 1)) | currency }}</h3>
+          <p class="text-red-400 text-xs font-bold mt-1 flex items-center gap-1">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            5.2%
+          </p>
+        </div>
+        <svg class="w-16 h-8 text-red-400/40" fill="none" viewBox="0 0 60 30" stroke="currentColor" stroke-width="2"><path d="M0 5 C 10 5, 20 20, 30 10 C 40 0, 50 25, 60 25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <!-- Average Order Card -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm flex flex-col justify-between h-36">
+      <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-500 flex items-center justify-center mb-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      </div>
+      <div class="flex justify-between items-end">
+        <div>
+          <p class="text-slate-400 text-sm font-medium">Orders</p>
+          <h3 class="text-2xl font-black text-slate-800 mt-1">{{ totalOrders() || '2066.16' }}</h3>
+          <p class="text-[#00d084] text-xs font-bold mt-1 flex items-center gap-1">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+            6.5%
+          </p>
+        </div>
+        <svg class="w-16 h-8 text-[#00d084]/40" fill="none" viewBox="0 0 60 30" stroke="currentColor" stroke-width="2"><path d="M0 20 C 10 20, 25 5, 35 15 C 45 25, 55 10, 60 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <!-- Daily Visitor Card -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm flex flex-col justify-between h-36">
+      <div class="w-10 h-10 rounded-xl bg-amber-900 text-amber-600 flex items-center justify-center mb-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+      </div>
+      <div class="flex justify-between items-end">
+        <div>
+          <p class="text-slate-400 text-sm font-medium">Daily Visitor</p>
+          <h3 class="text-2xl font-black text-slate-800 mt-1">13.79</h3>
+          <p class="text-[#00d084] text-xs font-bold mt-1 flex items-center gap-1">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+            9.5%
+          </p>
+        </div>
+        <svg class="w-16 h-8 text-[#00d084]/40" fill="none" viewBox="0 0 60 30" stroke="currentColor" stroke-width="2"><path d="M0 25 C 10 25, 15 5, 30 15 C 45 25, 50 10, 60 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIDDLE SECTION -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- Chart Card -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm md:col-span-3 flex flex-col">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h3 class="text-slate-800 font-bold">Recent One-Week Or Sale</h3>
+          <div class="flex items-end gap-3 mt-1">
+            <h2 class="text-3xl font-black text-slate-800">{{ totalRevenue() | currency }}</h2>
+            <p class="text-[#00d084] text-sm font-bold mb-1">$15,505.01</p>
+          </div>
+        </div>
+        <select class="bg-emerald-50 text-emerald-600 font-bold text-sm px-3 py-1.5 rounded-lg outline-none border-none">
+          <option>This Year</option>
+          <option>Last Year</option>
+        </select>
+      </div>
+
+      <!-- Mock SVG Chart matching the picture exactly -->
+      <div class="flex-1 min-h-[200px] relative w-full flex items-end pt-8">
+        <!-- Grid lines -->
+        <div class="absolute inset-0 flex flex-col justify-between z-0 pb-6 text-[10px] text-slate-300">
+          <div class="border-b border-slate-100 flex-1 flex items-end pb-1">100k</div>
+          <div class="border-b border-slate-100 flex-1 flex items-end pb-1">80k</div>
+          <div class="border-b border-slate-100 flex-1 flex items-end pb-1">60k</div>
+          <div class="border-b border-slate-100 flex-1 flex items-end pb-1">40k</div>
+          <div class="border-b border-slate-100 flex-1 flex items-end pb-1">20k</div>
+        </div>
+        
+        <svg class="w-full h-full relative z-10 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00d084" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#00d084" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Green filled path -->
+          <path d="M0,60 L5,60 L10,50 L15,65 L20,30 L25,45 L30,40 L35,50 L40,65 L45,60 L50,65 L55,40 L60,10 L65,65 L70,65 L75,85 L80,55 L85,60 L90,60 L95,60 L100,60 L100,100 L0,100 Z" fill="url(#chartGrad)"/>
+          
+          <!-- Purple stroke path -->
+          <path d="M0,80 L5,80 L10,75 L15,90 L20,60 L25,75 L30,65 L35,65 L40,80 L45,75 L50,80 L55,60 L60,40 L65,80 L70,80 L75,95 L80,75 L85,75 L90,70 L95,70 L100,75" fill="none" stroke="#6366f1" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+
+          <!-- Green stroke path -->
+          <path d="M0,60 L5,60 L10,50 L15,65 L20,30 L25,45 L30,40 L35,50 L40,65 L45,60 L50,65 L55,40 L60,10 L65,65 L70,65 L75,85 L80,55 L85,60 L90,60 L95,60 L100,60" fill="none" stroke="#00d084" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+          
+          <!-- Tooltip point -->
+          <circle cx="60" cy="10" r="2" fill="#00d084" stroke="#fff" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="60" y1="10" x2="60" y2="100" stroke="#00d084" stroke-width="1" vector-effect="non-scaling-stroke" stroke-dasharray="2 2"/>
+        </svg>
+
+        <!-- Tooltip box -->
+        <div class="absolute left-[56%] top-[10%] bg-slate-900 text-white text-[10px] rounded px-2 py-1 flex flex-col items-center -translate-x-1/2 -translate-y-[120%] shadow-lg z-20">
+          <span class="text-slate-400 text-[8px]">Total Sale</span>
+          <span class="font-bold">45012</span>
+          <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-[4px] border-transparent border-t-slate-900"></div>
+        </div>
+
+        <div class="absolute bottom-0 inset-x-0 flex justify-between text-[10px] font-medium text-slate-400 mt-2 z-0 px-2">
+          <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span class="text-slate-800 font-bold bg-slate-100 rounded px-1">Jun</span><span>Jul</span><span>Aug</span><span>Sep</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent Card -->
+    <div class="bg-white p-8 rounded-3xl shadow-sm flex flex-col items-center text-center">
+      <div class="w-24 h-24 rounded-full bg-pink-100 border-[6px] border-pink-50 p-1 mb-4">
+        <img src="https://i.pravatar.cc/150?img=47" class="w-full h-full rounded-full object-cover" alt="Agent">
+      </div>
+      <div class="border border-slate-200 rounded-xl px-8 py-3 mb-6 w-full">
+        <h3 class="font-black text-slate-800">Thomas Smith</h3>
+        <p class="text-xs text-slate-400 font-medium">Agent</p>
+      </div>
+      
+      <div class="flex w-full justify-between px-2 mb-6 text-sm">
+        <div class="text-left">
+          <p class="text-slate-400 font-medium text-xs mb-1">Target</p>
+          <p class="font-black text-slate-800">$45854</p>
+        </div>
+        <div class="text-right">
+          <p class="text-slate-400 font-medium text-xs mb-1">Sale</p>
+          <p class="font-black text-slate-800">$55843</p>
+        </div>
+      </div>
+
+      <button class="w-full py-2.5 bg-[#00d084] text-white font-bold rounded-lg hover:bg-[#00c070] transition-colors mt-auto">
+        View Details
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM SECTION -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- Popular Products Table -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm md:col-span-3">
+      <h3 class="text-xl font-black text-slate-800 mb-4">Popular Products</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="text-slate-400 border-b border-transparent">
+              <th class="pb-3 font-medium">Products Picture & Name</th>
+              <th class="pb-3 font-medium">Sales</th>
+              <th class="pb-3 font-medium">Pricing</th>
+              <th class="pb-3 font-medium">Stock Status</th>
+              <th class="pb-3 font-medium text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            <!-- Row 1 -->
+            <tr class="group hover:bg-slate-50 transition-colors">
+              <td class="py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center p-2">
+                    📱
+                  </div>
+                  <span class="font-bold text-slate-700 text-xs">i Phone 14 Pro Max</span>
+                </div>
+              </td>
+              <td class="py-3 font-bold text-slate-500">25</td>
+              <td class="py-3 font-bold text-slate-500">$1200.99</td>
+              <td class="py-3">
+                <div>
+                  <p class="text-[#00d084] font-bold text-xs">Available</p>
+                  <p class="text-[10px] text-slate-400">22k Views</p>
+                </div>
+              </td>
+              <td class="py-3 text-center">
+                <button class="text-slate-400 hover:text-slate-800 font-black">···</button>
+              </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr class="group hover:bg-slate-50 transition-colors">
+              <td class="py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center p-2">
+                    ⌚
+                  </div>
+                  <span class="font-bold text-slate-700 text-xs">Apple Watch Series 3</span>
+                </div>
+              </td>
+              <td class="py-3 font-bold text-slate-500">40</td>
+              <td class="py-3 font-bold text-slate-500">$1200.99</td>
+              <td class="py-3">
+                <div>
+                  <p class="text-red-400 font-bold text-xs">Unavailable</p>
+                  <p class="text-[10px] text-slate-400">22k Views</p>
+                </div>
+              </td>
+              <td class="py-3 text-center">
+                <button class="text-slate-400 hover:text-slate-800 font-black">···</button>
+              </td>
+            </tr>
+            <!-- Row 3 dynamic -->
+            @for (p of lowStockProducts().slice(0, 1); track p.id) {
+            <tr class="group hover:bg-slate-50 transition-colors">
+              <td class="py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center font-bold text-slate-400">
+                    {{ p.name.substring(0,2) }}
+                  </div>
+                  <span class="font-bold text-slate-700 text-xs">{{ p.name }}</span>
+                </div>
+              </td>
+              <td class="py-3 font-bold text-slate-500">12</td>
+              <td class="py-3 font-bold text-slate-500">{{ p.price | currency }}</td>
+              <td class="py-3">
+                <div>
+                  <p class="font-bold text-xs" [ngClass]="p.stockQuantity > 0 ? 'text-[#00d084]' : 'text-red-400'">{{ p.stockQuantity > 0 ? 'Available' : 'Unavailable' }}</p>
+                  <p class="text-[10px] text-slate-400">{{ p.stockQuantity }} in stock</p>
+                </div>
+              </td>
+              <td class="py-3 text-center">
+                <button class="text-slate-400 hover:text-slate-800 font-black">···</button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Revenue Pie Chart -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm flex flex-col">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-black text-slate-800">Revenue</h3>
+        <select class="bg-orange-50 text-orange-600 font-bold text-xs px-2 py-1 rounded outline-none border-none">
+          <option>Yearly</option>
+          <option>Monthly</option>
+        </select>
+      </div>
+
+      <div class="flex-1 flex flex-col items-center justify-center relative">
+        <!-- CSS Pie Chart representation -->
+        <div class="w-40 h-40 rounded-full border-[20px] border-slate-100 relative" style="border-top-color: #2563eb; border-right-color: #3b82f6; border-bottom-color: #00d084; border-left-color: #00d084; transform: rotate(45deg);">
+        </div>
+        
+        <!-- Legend inside (approximate) -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-[10px] font-bold text-white drop-shadow-md pointer-events-none">
+          <span class="absolute top-[20%] right-[30%]">15%</span>
+          <span class="absolute top-[40%] right-[15%]">13%</span>
+          <span class="absolute bottom-[20%] left-[30%]">28%</span>
+        </div>
+
+        <!-- Legend Bottom -->
+        <div class="flex justify-center gap-4 mt-8 w-full text-[10px] font-bold text-slate-500">
+          <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-600"></span> 2020</div>
+          <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#00d084]"></span> 2021</div>
+          <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-900"></span> 2022</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

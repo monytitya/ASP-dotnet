@@ -9,7 +9,17 @@ public static class DbInitializer
         using var conn = new MySqlConnection(connectionString);
         await conn.OpenAsync();
 
-        // Employees table
+        // 1. Existing App Tables
+        await Execute(conn, """
+            CREATE TABLE IF NOT EXISTS Inventories (
+                Id          INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                Name        VARCHAR(200)  NOT NULL,
+                Description VARCHAR(500)  NULL,
+                Quantity    INT           NOT NULL DEFAULT 0,
+                Price       DECIMAL(18,2) NOT NULL DEFAULT 0
+            );
+            """);
+
         await Execute(conn, """
             CREATE TABLE IF NOT EXISTS Employees (
                 Id     INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -19,7 +29,6 @@ public static class DbInitializer
             );
             """);
 
-        // Roles table
         await Execute(conn, """
             CREATE TABLE IF NOT EXISTS Roles (
                 Id   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +36,6 @@ public static class DbInitializer
             );
             """);
 
-        // Accounts table — references Roles
         await Execute(conn, """
             CREATE TABLE IF NOT EXISTS Accounts (
                 Id       INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -39,13 +47,29 @@ public static class DbInitializer
             );
             """);
 
-        // Seed default roles if empty
         await Execute(conn, """
             INSERT IGNORE INTO Roles (Id, Name) VALUES
                 (1, 'Admin'),
                 (2, 'Manager'),
                 (3, 'Employee');
             """);
+
+        // 2. Execute new Sales & Inventory tables from SQL file
+        var sqlFilePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.FullName, "inventory_db.sql");
+        if (File.Exists(sqlFilePath))
+        {
+            var sqlCommands = await File.ReadAllTextAsync(sqlFilePath);
+            // MySqlConnector allows multiple statements by default in the same command if configured, or we just execute it directly
+            using var cmd = new MySqlCommand(sqlCommands, conn);
+            try
+            {
+                await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error executing SQL script: {ex.Message}");
+            }
+        }
     }
 
     private static async Task Execute(MySqlConnection conn, string sql)

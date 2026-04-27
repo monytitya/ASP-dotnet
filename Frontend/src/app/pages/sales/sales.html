@@ -1,0 +1,135 @@
+<div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+         <h2 class="text-3xl font-black text-slate-900 tracking-tight">Sales Management</h2>
+         <p class="text-slate-500 font-medium mt-1">Manage orders, customers, and revenue.</p>
+      </div>
+      <div class="flex items-center gap-3">
+         <button (click)="addNew()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-200 active:scale-95 flex items-center gap-2">
+            <span class="text-xl">+</span> New Order
+         </button>
+      </div>
+   </div>
+
+   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm group">
+         <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 text-xl group-hover:scale-110 transition-transform">🛒</div>
+         </div>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Total Orders</h3>
+         <p class="text-3xl font-black text-slate-900">{{ totalOrders() }} <span class="text-slate-400 text-lg font-medium">Orders</span></p>
+      </div>
+      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm group">
+         <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-xl group-hover:scale-110 transition-transform">💰</div>
+         </div>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Total Revenue</h3>
+         <p class="text-3xl font-black text-slate-900">{{ totalRevenue() | currency }}</p>
+      </div>
+   </div>
+
+   <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+      <div class="p-8 border-b border-slate-100 flex justify-between items-center">
+         <h3 class="text-xl font-black text-slate-900 flex items-center gap-3">
+            <span class="w-2 h-6 bg-indigo-600 rounded-full"></span> Orders History
+         </h3>
+         <button (click)="loadData()" class="p-2 hover:bg-slate-50 rounded-lg text-slate-400">🔄</button>
+      </div>
+
+      @if (loading) {
+         <div class="flex flex-col items-center justify-center py-20 gap-4">
+            <div class="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
+         </div>
+      } @else {
+         <div class="overflow-x-auto">
+            <table class="w-full text-left">
+               <thead>
+                  <tr class="bg-slate-50/50">
+                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Order ID</th>
+                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Customer</th>
+                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Date</th>
+                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Total</th>
+                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 text-right">Actions</th>
+                  </tr>
+               </thead>
+               <tbody class="divide-y divide-slate-50">
+                  @for (item of paginatedData; track item.id) {
+                     <tr class="hover:bg-indigo-50/30 transition-colors group">
+                        <td class="px-8 py-5 font-bold text-slate-900">#{{ item.id }}</td>
+                        <td class="px-8 py-5 font-medium text-slate-600">{{ item.customer?.name || 'Unknown' }}</td>
+                        <td class="px-8 py-5 text-sm text-slate-500">{{ item.orderDate | date }}</td>
+                        <td class="px-8 py-5 font-black text-indigo-600">{{ item.totalAmount | currency }}</td>
+                        <td class="px-8 py-5 text-right relative">
+                           <button (click)="toggleMenu(item, $event)" class="text-slate-300 hover:text-slate-600 p-2">⋮</button>
+                           @if (openedItem === item) {
+                              <div class="absolute right-8 top-12 bg-white border border-slate-200 shadow-2xl rounded-2xl w-40 z-50 py-3">
+                                 <button (click)="view(item)" class="flex items-center gap-3 w-full px-5 py-2.5 hover:bg-slate-50 text-sm font-bold text-slate-600">👁️ View</button>
+                                 <button (click)="delete(item)" class="flex items-center gap-3 w-full px-5 py-2.5 text-red-500 hover:bg-red-50 text-sm font-bold">🗑️ Delete</button>
+                              </div>
+                           }
+                        </td>
+                     </tr>
+                  }
+               </tbody>
+            </table>
+         </div>
+      }
+   </div>
+</div>
+
+@if (showModal) {
+   <div class="fixed inset-0 flex items-center justify-center z-50 p-4">
+      <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" (click)="showModal=false"></div>
+      <div class="relative w-full max-w-2xl bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden z-10 p-8 max-h-[90vh] overflow-y-auto">
+         <h2 class="text-2xl font-black mb-6">{{ modalMode === 'VIEW' ? 'View Order' : 'Create New Order' }}</h2>
+         
+         <div class="space-y-4">
+            <div>
+               <label class="text-xs font-bold text-slate-500">Customer</label>
+               <select [(ngModel)]="form.customerId" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50 p-3 rounded-xl outline-none font-medium">
+                  <option [value]="0" disabled>Select a customer</option>
+                  @for (c of customers(); track c.id) {
+                     <option [value]="c.id">{{ c.name }}</option>
+                  }
+               </select>
+            </div>
+
+            <div class="mt-6 border-t pt-4">
+               <div class="flex justify-between items-center mb-4">
+                  <h3 class="font-bold">Order Items</h3>
+                  @if (modalMode === 'ADD') {
+                     <button (click)="addOrderItem()" class="text-sm bg-indigo-100 text-indigo-600 px-3 py-1 rounded-lg font-bold">+ Add Item</button>
+                  }
+               </div>
+
+               @for (oi of form.orderItems; track $index) {
+                  <div class="flex gap-4 mb-3 items-center">
+                     <select [(ngModel)]="oi.productId" (change)="onProductSelect(oi)" [disabled]="modalMode === 'VIEW'" class="flex-1 bg-slate-50 p-3 rounded-xl outline-none text-sm">
+                        <option [value]="0" disabled>Select Product</option>
+                        @for (p of products(); track p.id) {
+                           <option [value]="p.id">{{ p.name }} - {{ p.price | currency }}</option>
+                        }
+                     </select>
+                     <input type="number" [(ngModel)]="oi.quantity" (change)="calculateTotal()" [disabled]="modalMode === 'VIEW'" class="w-24 bg-slate-50 p-3 rounded-xl outline-none" placeholder="Qty">
+                     <span class="w-24 font-bold">{{ oi.quantity * oi.price | currency }}</span>
+                     @if (modalMode === 'ADD') {
+                        <button (click)="removeOrderItem($index)" class="text-red-500 font-bold p-2">✕</button>
+                     }
+                  </div>
+               }
+            </div>
+
+            <div class="text-right text-2xl font-black mt-6 border-t pt-4">
+               Total: <span class="text-indigo-600">{{ form.totalAmount | currency }}</span>
+            </div>
+
+            @if (modalMode === 'ADD') {
+               <div class="flex gap-4 mt-8">
+                  <button (click)="showModal=false" class="flex-1 py-4 bg-slate-100 text-slate-500 font-bold rounded-xl">Cancel</button>
+                  <button (click)="save()" [disabled]="form.customerId === 0 || form.orderItems?.length === 0" class="flex-1 py-4 bg-indigo-600 text-white font-bold rounded-xl disabled:opacity-50">Create Order</button>
+               </div>
+            }
+         </div>
+      </div>
+   </div>
+}
