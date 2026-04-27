@@ -23,7 +23,7 @@ public class OrderItem
     [Column("price")]
     public decimal Price { get; set; }
 
-    // Navigation properties
+
     [JsonIgnore]
     public Order? Order { get; set; }
     public Product? Product { get; set; }

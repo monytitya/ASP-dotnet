@@ -17,6 +17,10 @@ public class AppDbContext : DbContext
     public DbSet<OrderItem> OrderItems { get; set; } = null!;
     public DbSet<Purchase> Purchases { get; set; } = null!;
     public DbSet<PurchaseItem> PurchaseItems { get; set; } = null!;
+    public DbSet<Employee> Employees { get; set; } = null!;
+    public DbSet<Inventory> Inventories { get; set; } = null!;
+    public DbSet<Account> Accounts { get; set; } = null!;
+    public DbSet<Role> Roles { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

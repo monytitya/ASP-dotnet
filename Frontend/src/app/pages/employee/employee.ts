@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Employee } from './employee.model';
 import { EmployeeService } from './employee.service';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'app-employee',
@@ -14,6 +15,7 @@ import { EmployeeService } from './employee.service';
 export class EmployeeComponent implements OnInit {
 
   private service = inject(EmployeeService);
+  private uploadService = inject(UploadService);
   empObj = signal<Employee[]>([]);
 
   // Statistics
@@ -158,12 +160,23 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.uploadService.upload(file).subscribe({
+        next: res => this.form.imageUrl = res.url,
+        error: err => console.error('Upload failed', err)
+      });
+    }
+  }
+
   resetForm(): Employee {
     return {
       id: 0,
       name: '',
       email: '',
-      salary: 0
+      salary: 0,
+      imageUrl: ''
     };
   }
 }

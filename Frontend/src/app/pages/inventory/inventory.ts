@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product';
 import { CategoryService, Category } from '../../services/category';
 import { SupplierService, Supplier } from '../../services/supplier';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'app-inventory',
@@ -17,6 +18,7 @@ export class InventoryComponent implements OnInit {
   private service = inject(ProductService);
   private categoryService = inject(CategoryService);
   private supplierService = inject(SupplierService);
+  private uploadService = inject(UploadService);
 
   invObj = signal<Product[]>([]);
   categories = signal<Category[]>([]);
@@ -126,7 +128,22 @@ export class InventoryComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.uploadService.upload(file).subscribe({
+        next: res => this.form.imageUrl = res.url,
+        error: err => console.error('Upload failed', err)
+      });
+    }
+  }
+
   save() {
+    if (!this.form.name || !this.form.categoryId || !this.form.supplierId) {
+      alert('Please fill out all required fields, including Category and Supplier.');
+      return;
+    }
+
     if (this.modalMode === 'EDIT' && this.form.id) {
       this.service.update(this.form.id, this.form as Product).subscribe({
         next: () => {
@@ -154,7 +171,8 @@ export class InventoryComponent implements OnInit {
       stockQuantity: 0,
       price: 0,
       categoryId: 0,
-      supplierId: 0
+      supplierId: 0,
+      imageUrl: ''
     };
   }
 }

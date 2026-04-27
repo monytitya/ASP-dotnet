@@ -1,111 +1,53 @@
-using MySql.Data.MySqlClient;
+using Backend.Data;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services;
 
 public class EmployeeService : IEmployeeService
 {
-    private readonly string _connectionString;
+    private readonly AppDbContext _context;
 
-    public EmployeeService(IConfiguration config)
+    public EmployeeService(AppDbContext context)
     {
-        _connectionString = config.GetConnectionString("MySqlDb") ?? throw new InvalidOperationException("Connection string 'MySqlDb' not found.");
+        _context = context;
     }
 
     public async Task<List<Employee>> GetAllAsync()
     {
-        var list = new List<Employee>();
-
-        using var conn = new MySqlConnection(_connectionString);
-        using var cmd = new MySqlCommand("SELECT * FROM Employees", conn);
-
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-
-        while (await reader.ReadAsync())
-        {
-            list.Add(new Employee
-            {
-                Id = Convert.ToInt32(reader["Id"]),
-                Name = reader["Name"].ToString() ?? string.Empty,
-                Email = reader["Email"].ToString() ?? string.Empty,
-                Salary = Convert.ToDecimal(reader["Salary"])
-            });
-        }
-
-        return list;
+        return await _context.Set<Employee>().ToListAsync();
     }
 
     public async Task<Employee?> GetByIdAsync(int id)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        using var cmd = new MySqlCommand("SELECT * FROM Employees WHERE Id = @id", conn);
-
-        cmd.Parameters.AddWithValue("@id", id);
-
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-
-        if (await reader.ReadAsync())
-        {
-            return new Employee
-            {
-                Id = Convert.ToInt32(reader["Id"]),
-                Name = reader["Name"].ToString() ?? string.Empty,
-                Email = reader["Email"].ToString() ?? string.Empty,
-                Salary = Convert.ToDecimal(reader["Salary"])
-            };
-        }
-
-        return null;
+        return await _context.Set<Employee>().FindAsync(id);
     }
 
     public async Task CreateAsync(Employee emp)
     {
-        using var conn = new MySqlConnection(_connectionString);
-
-        string sql = @"INSERT INTO Employees (Name, Email, Salary)
-                       VALUES (@name, @email, @salary)";
-
-        using var cmd = new MySqlCommand(sql, conn);
-
-        cmd.Parameters.AddWithValue("@name", emp.Name);
-        cmd.Parameters.AddWithValue("@email", emp.Email);
-        cmd.Parameters.AddWithValue("@salary", emp.Salary);
-
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        _context.Set<Employee>().Add(emp);
+        await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(int id, Employee emp)
     {
-        using var conn = new MySqlConnection(_connectionString);
-
-        string sql = @"UPDATE Employees
-                       SET Name = @name, Email = @email, Salary = @salary
-                       WHERE Id = @id";
-
-        using var cmd = new MySqlCommand(sql, conn);
-
-        cmd.Parameters.AddWithValue("@name", emp.Name);
-        cmd.Parameters.AddWithValue("@email", emp.Email);
-        cmd.Parameters.AddWithValue("@salary", emp.Salary);
-        cmd.Parameters.AddWithValue("@id", id);
-
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        var existing = await _context.Set<Employee>().FindAsync(id);
+        if (existing != null)
+        {
+            existing.Name = emp.Name;
+            existing.Email = emp.Email;
+            existing.Salary = emp.Salary;
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task DeleteAsync(int id)
     {
-        using var conn = new MySqlConnection(_connectionString);
-
-        string sql = "DELETE FROM Employees WHERE Id = @id";
-
-        using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@id", id);
-
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        var existing = await _context.Set<Employee>().FindAsync(id);
+        if (existing != null)
+        {
+            _context.Set<Employee>().Remove(existing);
+            await _context.SaveChangesAsync();
+        }
     }
 }

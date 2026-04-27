@@ -29,11 +29,24 @@ builder.Services.AddScoped<IRoleService,     RoleService>();
 builder.Services.AddScoped<IAccountService,  AccountService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+});
+
 var connStr = builder.Configuration.GetConnectionString("MySqlDb")!;
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connStr, ServerVersion.AutoDetect(connStr)));
+    options.UseMySql(connStr, ServerVersion.AutoDetect(connStr))
+           .EnableSensitiveDataLogging(false) 
+           .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)); 
 
 var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseResponseCompression(); 
+    app.UseHttpsRedirection();
+}
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
@@ -44,14 +57,21 @@ app.UseSwaggerUI(c =>
 
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
-app.UseCors("AllowAngular");
+app.UseStaticFiles();
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-await DbInitializer.InitializeAsync(connStr);
+try 
+{
+    await DbInitializer.InitializeAsync(connStr);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Database initialization failed: {ex.Message}");
+}
 
 app.Run();

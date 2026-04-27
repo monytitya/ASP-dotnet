@@ -32,9 +32,14 @@ export class CustomersComponent implements OnInit {
   loadData() {
     this.loading = true;
     this.service.getAll().subscribe({
-      next: data => this.customers.set(data),
-      error: err => console.error(err),
-      complete: () => this.loading = false
+      next: data => {
+        this.customers.set(data);
+        this.loading = false;
+      },
+      error: err => {
+        console.error(err);
+        this.loading = false;
+      }
     });
   }
 

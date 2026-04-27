@@ -1,20 +1,13 @@
 
-DROP TABLE IF EXISTS Purchase_Items;
-DROP TABLE IF EXISTS Purchases;
-DROP TABLE IF EXISTS Order_Items;
-DROP TABLE IF EXISTS Orders;
-DROP TABLE IF EXISTS Products;
-DROP TABLE IF EXISTS Categories;
-DROP TABLE IF EXISTS Suppliers;
-DROP TABLE IF EXISTS Customers;
+-- Removed DROP TABLE statements to prevent data loss on restart
 
-CREATE TABLE Categories (
+CREATE TABLE IF NOT EXISTS Categories (
     category_id   INT           NOT NULL AUTO_INCREMENT,
     category_name VARCHAR(100)  NOT NULL,
     PRIMARY KEY (category_id)
 );
 
-CREATE TABLE Suppliers (
+CREATE TABLE IF NOT EXISTS Suppliers (
     supplier_id  INT           NOT NULL AUTO_INCREMENT,
     name         VARCHAR(150)  NOT NULL,
     contact_info VARCHAR(255),
@@ -22,7 +15,7 @@ CREATE TABLE Suppliers (
     PRIMARY KEY (supplier_id)
 );
 
-CREATE TABLE Customers (
+CREATE TABLE IF NOT EXISTS Customers (
     customer_id INT           NOT NULL AUTO_INCREMENT,
     name        VARCHAR(150)  NOT NULL,
     phone       VARCHAR(20),
@@ -31,7 +24,7 @@ CREATE TABLE Customers (
 );
 
 
-CREATE TABLE Products (
+CREATE TABLE IF NOT EXISTS Products (
     product_id     INT             NOT NULL AUTO_INCREMENT,
     name           VARCHAR(150)    NOT NULL,
     description    TEXT,
@@ -39,6 +32,7 @@ CREATE TABLE Products (
     price          DECIMAL(10, 2)  NOT NULL DEFAULT 0.00,
     stock_quantity INT             NOT NULL DEFAULT 0,
     supplier_id    INT             NOT NULL,
+    image_url      VARCHAR(500),
     PRIMARY KEY (product_id),
     CONSTRAINT fk_product_category
         FOREIGN KEY (category_id) REFERENCES Categories (category_id)
@@ -49,7 +43,7 @@ CREATE TABLE Products (
 );
 
 
-CREATE TABLE Orders (
+CREATE TABLE IF NOT EXISTS Orders (
     order_id     INT             NOT NULL AUTO_INCREMENT,
     customer_id  INT             NOT NULL,
     order_date   DATE            NOT NULL DEFAULT (CURRENT_DATE),
@@ -60,7 +54,7 @@ CREATE TABLE Orders (
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE Order_Items (
+CREATE TABLE IF NOT EXISTS Order_Items (
     order_item_id INT             NOT NULL AUTO_INCREMENT,
     order_id      INT             NOT NULL,
     product_id    INT             NOT NULL,
@@ -75,7 +69,7 @@ CREATE TABLE Order_Items (
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE Purchases (
+CREATE TABLE IF NOT EXISTS Purchases (
     purchase_id   INT  NOT NULL AUTO_INCREMENT,
     supplier_id   INT  NOT NULL,
     purchase_date DATE NOT NULL DEFAULT (CURRENT_DATE),
@@ -86,7 +80,7 @@ CREATE TABLE Purchases (
 );
 
 
-CREATE TABLE Purchase_Items (
+CREATE TABLE IF NOT EXISTS Purchase_Items (
     purchase_item_id INT             NOT NULL AUTO_INCREMENT,
     purchase_id      INT             NOT NULL,
     product_id       INT             NOT NULL,

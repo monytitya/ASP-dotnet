@@ -3,4 +3,5 @@ export interface Employee {
   name: string;
   email: string;
   salary: number;
+  imageUrl?: string;
 }

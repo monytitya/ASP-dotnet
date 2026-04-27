@@ -46,9 +46,12 @@ export class PurchasesComponent implements OnInit {
       next: data => {
         this.purchases.set(data);
         this.calculateStats(data);
+        this.loading = false;
       },
-      error: err => console.error(err),
-      complete: () => this.loading = false
+      error: err => {
+        console.error(err);
+        this.loading = false;
+      }
     });
   }
 
@@ -59,7 +62,11 @@ export class PurchasesComponent implements OnInit {
 
   calculateStats(data: Purchase[]) {
     this.totalPurchases.set(data.length);
-    this.totalCost.set(data.reduce((acc, curr) => acc + curr.purchaseItems.reduce((a, c) => a + (c.quantity * c.costPrice), 0), 0));
+    const cost = data.reduce((acc, curr) => {
+      const items = curr.purchaseItems || [];
+      return acc + items.reduce((a, c) => a + (c.quantity * (c.costPrice || 0)), 0);
+    }, 0);
+    this.totalCost.set(cost);
   }
 
   get paginatedData(): Purchase[] {

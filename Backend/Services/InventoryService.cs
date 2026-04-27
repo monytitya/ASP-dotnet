@@ -1,115 +1,54 @@
-using MySql.Data.MySqlClient;
+using Backend.Data;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services;
 
 public class InventoryService : IInventoryService
 {
-    private readonly string _connectionString;
+    private readonly AppDbContext _context;
 
-    public InventoryService(IConfiguration config)
+    public InventoryService(AppDbContext context)
     {
-        _connectionString = config.GetConnectionString("MySqlDb") ?? throw new InvalidOperationException("Connection string 'MySqlDb' not found.");
+        _context = context;
     }
 
     public async Task<List<Inventory>> GetAllAsync()
     {
-        var list = new List<Inventory>();
-
-        using var conn = new MySqlConnection(_connectionString);
-        using var cmd = new MySqlCommand("SELECT * FROM Inventories", conn);
-
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-
-        while (await reader.ReadAsync())
-        {
-            list.Add(new Inventory
-            {
-                Id = Convert.ToInt32(reader["Id"]),
-                Name = reader["Name"].ToString() ?? string.Empty,
-                Description = reader["Description"].ToString() ?? string.Empty,
-                Quantity = Convert.ToInt32(reader["Quantity"]),
-                Price = Convert.ToDecimal(reader["Price"])
-            });
-        }
-
-        return list;
+        return await _context.Set<Inventory>().ToListAsync();
     }
 
     public async Task<Inventory?> GetByIdAsync(int id)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        using var cmd = new MySqlCommand("SELECT * FROM Inventories WHERE Id = @id", conn);
-
-        cmd.Parameters.AddWithValue("@id", id);
-
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-
-        if (await reader.ReadAsync())
-        {
-            return new Inventory
-            {
-                Id = Convert.ToInt32(reader["Id"]),
-                Name = reader["Name"].ToString() ?? string.Empty,
-                Description = reader["Description"].ToString() ?? string.Empty,
-                Quantity = Convert.ToInt32(reader["Quantity"]),
-                Price = Convert.ToDecimal(reader["Price"])
-            };
-        }
-
-        return null;
+        return await _context.Set<Inventory>().FindAsync(id);
     }
 
     public async Task CreateAsync(Inventory inventory)
     {
-        using var conn = new MySqlConnection(_connectionString);
-
-        string sql = @"INSERT INTO Inventories (Name, Description, Quantity, Price)
-                       VALUES (@name, @description, @quantity, @price)";
-
-        using var cmd = new MySqlCommand(sql, conn);
-
-        cmd.Parameters.AddWithValue("@name", inventory.Name);
-        cmd.Parameters.AddWithValue("@description", inventory.Description);
-        cmd.Parameters.AddWithValue("@quantity", inventory.Quantity);
-        cmd.Parameters.AddWithValue("@price", inventory.Price);
-
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        _context.Set<Inventory>().Add(inventory);
+        await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(int id, Inventory inventory)
     {
-        using var conn = new MySqlConnection(_connectionString);
-
-        string sql = @"UPDATE Inventories
-                       SET Name = @name, Description = @description, Quantity = @quantity, Price = @price
-                       WHERE Id = @id";
-
-        using var cmd = new MySqlCommand(sql, conn);
-
-        cmd.Parameters.AddWithValue("@name", inventory.Name);
-        cmd.Parameters.AddWithValue("@description", inventory.Description);
-        cmd.Parameters.AddWithValue("@quantity", inventory.Quantity);
-        cmd.Parameters.AddWithValue("@price", inventory.Price);
-        cmd.Parameters.AddWithValue("@id", id);
-
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        var existing = await _context.Set<Inventory>().FindAsync(id);
+        if (existing != null)
+        {
+            existing.Name = inventory.Name;
+            existing.Description = inventory.Description;
+            existing.Quantity = inventory.Quantity;
+            existing.Price = inventory.Price;
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task DeleteAsync(int id)
     {
-        using var conn = new MySqlConnection(_connectionString);
-
-        string sql = "DELETE FROM Inventories WHERE Id = @id";
-
-        using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@id", id);
-
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        var existing = await _context.Set<Inventory>().FindAsync(id);
+        if (existing != null)
+        {
+            _context.Set<Inventory>().Remove(existing);
+            await _context.SaveChangesAsync();
+        }
     }
 }

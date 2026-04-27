@@ -1,170 +1,119 @@
-using MySql.Data.MySqlClient;
+using Backend.Data;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services;
 
 public class AccountService : IAccountService
 {
-    private readonly string _connectionString;
+    private readonly AppDbContext _context;
 
-    public AccountService(IConfiguration config)
+    public AccountService(AppDbContext context)
     {
-        _connectionString = config.GetConnectionString("MySqlDb")
-            ?? throw new InvalidOperationException("Connection string 'MySqlDb' not found.");
+        _context = context;
     }
 
     public async Task<List<Account>> GetAllAsync()
     {
-        var list = new List<Account>();
-        using var conn = new MySqlConnection(_connectionString);
-        const string sql = """
-            SELECT a.Id, a.Username, a.Password, a.Email, a.RoleId, r.Name AS RoleName
-            FROM Accounts a
-            LEFT JOIN Roles r ON a.RoleId = r.Id
-            """;
-        using var cmd = new MySqlCommand(sql, conn);
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            list.Add(new Account
-            {
-                Id       = Convert.ToInt32(reader["Id"]),
-                Username = reader["Username"].ToString()!,
-                Password = reader["Password"].ToString()!,
-                Email    = reader["Email"].ToString()!,
-                RoleId   = Convert.ToInt32(reader["RoleId"]),
-                RoleName = reader["RoleName"] == DBNull.Value ? null : reader["RoleName"].ToString()
-            });
-        }
-        return list;
+        return await _context.Accounts
+            .Join(_context.Roles, 
+                  a => a.RoleId, 
+                  r => r.Id, 
+                  (a, r) => new Account 
+                  { 
+                      Id = a.Id, 
+                      Username = a.Username, 
+                      Password = a.Password, 
+                      Email = a.Email, 
+                      RoleId = a.RoleId, 
+                      RoleName = r.Name 
+                  })
+            .ToListAsync();
     }
 
     public async Task<Account?> GetByIdAsync(int id)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        const string sql = """
-            SELECT a.Id, a.Username, a.Password, a.Email, a.RoleId, r.Name AS RoleName
-            FROM Accounts a
-            LEFT JOIN Roles r ON a.RoleId = r.Id
-            WHERE a.Id = @id
-            """;
-        using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@id", id);
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-        if (await reader.ReadAsync())
-        {
-            return new Account
-            {
-                Id       = Convert.ToInt32(reader["Id"]),
-                Username = reader["Username"].ToString()!,
-                Password = reader["Password"].ToString()!,
-                Email    = reader["Email"].ToString()!,
-                RoleId   = Convert.ToInt32(reader["RoleId"]),
-                RoleName = reader["RoleName"] == DBNull.Value ? null : reader["RoleName"].ToString()
-            };
-        }
-        return null;
+        return await _context.Accounts
+            .Where(a => a.Id == id)
+            .Join(_context.Roles, 
+                  a => a.RoleId, 
+                  r => r.Id, 
+                  (a, r) => new Account 
+                  { 
+                      Id = a.Id, 
+                      Username = a.Username, 
+                      Password = a.Password, 
+                      Email = a.Email, 
+                      RoleId = a.RoleId, 
+                      RoleName = r.Name 
+                  })
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Account?> GetByUsernameAsync(string username)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        const string sql = """
-            SELECT a.Id, a.Username, a.Password, a.Email, a.RoleId, r.Name AS RoleName
-            FROM Accounts a
-            LEFT JOIN Roles r ON a.RoleId = r.Id
-            WHERE a.Username = @username
-            """;
-        using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@username", username);
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-        if (await reader.ReadAsync())
-        {
-            return new Account
-            {
-                Id       = Convert.ToInt32(reader["Id"]),
-                Username = reader["Username"].ToString()!,
-                Password = reader["Password"].ToString()!,
-                Email    = reader["Email"].ToString()!,
-                RoleId   = Convert.ToInt32(reader["RoleId"]),
-                RoleName = reader["RoleName"] == DBNull.Value ? null : reader["RoleName"].ToString()
-            };
-        }
-        return null;
+        return await _context.Accounts
+            .Where(a => a.Username == username)
+            .Join(_context.Roles, 
+                  a => a.RoleId, 
+                  r => r.Id, 
+                  (a, r) => new Account 
+                  { 
+                      Id = a.Id, 
+                      Username = a.Username, 
+                      Password = a.Password, 
+                      Email = a.Email, 
+                      RoleId = a.RoleId, 
+                      RoleName = r.Name 
+                  })
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Account?> AuthenticateAsync(string username, string password)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        const string sql = """
-            SELECT a.Id, a.Username, a.Password, a.Email, a.RoleId, r.Name AS RoleName
-            FROM Accounts a
-            LEFT JOIN Roles r ON a.RoleId = r.Id
-            WHERE a.Username = @username AND a.Password = @password
-            """;
-        using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@username", username);
-        cmd.Parameters.AddWithValue("@password", password);
-        await conn.OpenAsync();
-        using var reader = await cmd.ExecuteReaderAsync();
-        if (await reader.ReadAsync())
-        {
-            return new Account
-            {
-                Id       = Convert.ToInt32(reader["Id"]),
-                Username = reader["Username"].ToString()!,
-                Password = reader["Password"].ToString()!,
-                Email    = reader["Email"].ToString()!,
-                RoleId   = Convert.ToInt32(reader["RoleId"]),
-                RoleName = reader["RoleName"] == DBNull.Value ? null : reader["RoleName"].ToString()
-            };
-        }
-        return null;
+        return await _context.Accounts
+            .Where(a => a.Username == username && a.Password == password)
+            .Join(_context.Roles, 
+                  a => a.RoleId, 
+                  r => r.Id, 
+                  (a, r) => new Account 
+                  { 
+                      Id = a.Id, 
+                      Username = a.Username, 
+                      Password = a.Password, 
+                      Email = a.Email, 
+                      RoleId = a.RoleId, 
+                      RoleName = r.Name 
+                  })
+            .FirstOrDefaultAsync();
     }
 
     public async Task CreateAsync(Account account)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        const string sql = """
-            INSERT INTO Accounts (Username, Password, Email, RoleId)
-            VALUES (@username, @password, @email, @roleId)
-            """;
-        using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@username", account.Username);
-        cmd.Parameters.AddWithValue("@password", account.Password);
-        cmd.Parameters.AddWithValue("@email",    account.Email);
-        cmd.Parameters.AddWithValue("@roleId",   account.RoleId);
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        _context.Accounts.Add(account);
+        await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(int id, Account account)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        const string sql = """
-            UPDATE Accounts
-            SET Username = @username, Password = @password, Email = @email, RoleId = @roleId
-            WHERE Id = @id
-            """;
-        using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@username", account.Username);
-        cmd.Parameters.AddWithValue("@password", account.Password);
-        cmd.Parameters.AddWithValue("@email",    account.Email);
-        cmd.Parameters.AddWithValue("@roleId",   account.RoleId);
-        cmd.Parameters.AddWithValue("@id",       id);
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        var existing = await _context.Accounts.FindAsync(id);
+        if (existing != null)
+        {
+            existing.Username = account.Username;
+            existing.Password = account.Password;
+            existing.Email = account.Email;
+            existing.RoleId = account.RoleId;
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task DeleteAsync(int id)
     {
-        using var conn = new MySqlConnection(_connectionString);
-        using var cmd  = new MySqlCommand("DELETE FROM Accounts WHERE Id = @id", conn);
-        cmd.Parameters.AddWithValue("@id", id);
-        await conn.OpenAsync();
-        await cmd.ExecuteNonQueryAsync();
+        var existing = await _context.Accounts.FindAsync(id);
+        if (existing != null)
+        {
+            _context.Accounts.Remove(existing);
+            await _context.SaveChangesAsync();
+        }
     }
 }

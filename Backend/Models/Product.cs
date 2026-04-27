@@ -31,6 +31,9 @@ public class Product
     [Column("supplier_id")]
     public int SupplierId { get; set; }
 
+    [Column("image_url")]
+    public string? ImageUrl { get; set; }
+
     // Navigation properties
     public Category? Category { get; set; }
     public Supplier? Supplier { get; set; }

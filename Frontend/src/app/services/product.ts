@@ -14,6 +14,7 @@ export interface Product {
   supplierId: number;
   category?: Category;
   supplier?: Supplier;
+  imageUrl?: string;
 }
 
 @Injectable({

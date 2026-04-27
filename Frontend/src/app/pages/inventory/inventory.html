@@ -1,89 +1,150 @@
-<div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-700">
+   <!-- Header Section -->
+   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
       <div>
-         <h2 class="text-3xl font-black text-slate-900 tracking-tight">Inventory Management</h2>
-         <p class="text-slate-500 font-medium mt-1">Monitor products, stock levels, and pricing.</p>
+         <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight leading-none mb-2">Inventory</h2>
+         <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+            <p class="text-slate-500 font-medium">Real-time stock management & analytics</p>
+         </div>
       </div>
-      <div class="flex items-center gap-3">
-         <button (click)="addNew()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-200 active:scale-95 flex items-center gap-2">
-            <span class="text-xl">+</span> Add Product
+      <div class="flex items-center gap-4">
+         <button (click)="loadData()" class="p-3 bg-white border border-slate-200 rounded-2xl text-slate-500 hover:bg-slate-50 transition-all hover:shadow-md active:scale-95">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+         </button>
+         <button (click)="addNew()" class="px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold rounded-2xl transition-all shadow-[0_10px_20px_-10px_rgba(79,70,229,0.4)] hover:shadow-[0_15px_30px_-10px_rgba(79,70,229,0.5)] active:scale-95 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add New Product
          </button>
       </div>
    </div>
 
-   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm group">
-         <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-xl group-hover:scale-110 transition-transform">🏷️</div>
+   <!-- Stats Cards -->
+   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] group hover:translate-y-[-4px] transition-all duration-300">
+         <div class="flex justify-between items-start mb-6">
+            <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            </div>
+            <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold uppercase tracking-wider rounded-full">Inventory</span>
          </div>
-         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Total Products</h3>
-         <p class="text-3xl font-black text-slate-900">{{ totalItems() }} <span class="text-slate-400 text-lg font-medium">Items</span></p>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">Total Items</h3>
+         <p class="text-4xl font-black text-slate-900 tracking-tight">{{ totalItems() }}</p>
       </div>
-      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm group">
-         <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-xl group-hover:scale-110 transition-transform">📦</div>
+
+      <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] group hover:translate-y-[-4px] transition-all duration-300">
+         <div class="flex justify-between items-start mb-6">
+            <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded-full">Stock</span>
          </div>
-         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Total Stock</h3>
-         <p class="text-3xl font-black text-slate-900">{{ totalQuantity() }} <span class="text-slate-400 text-lg font-medium">Units</span></p>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">Stock Units</h3>
+         <p class="text-4xl font-black text-slate-900 tracking-tight">{{ totalQuantity() }}</p>
       </div>
-      <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm group">
-         <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 text-xl group-hover:scale-110 transition-transform">💎</div>
+
+      <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] group hover:translate-y-[-4px] transition-all duration-300">
+         <div class="flex justify-between items-start mb-6">
+            <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-all duration-500">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <span class="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider rounded-full">Valuation</span>
          </div>
-         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">Inventory Value</h3>
-         <p class="text-3xl font-black text-slate-900">{{ totalValue() | currency:'USD':'symbol':'1.0-0' }}</p>
+         <h3 class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">Total Value</h3>
+         <p class="text-4xl font-black text-slate-900 tracking-tight">{{ totalValue() | currency:'USD':'symbol':'1.0-0' }}</p>
       </div>
    </div>
 
-   <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-      <div class="p-8 border-b border-slate-100 flex justify-between items-center">
-         <h3 class="text-xl font-black text-slate-900 flex items-center gap-3">
-            <span class="w-2 h-6 bg-indigo-600 rounded-full"></span> Products Overview
-         </h3>
-         <button (click)="loadData()" class="p-2 hover:bg-slate-50 rounded-lg text-slate-400">🔄</button>
+   <!-- Table Section -->
+   <div class="bg-white rounded-[3rem] border border-slate-100 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.05)] overflow-hidden">
+      <div class="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
+         <div class="flex items-center gap-4">
+            <div class="w-3 h-8 bg-indigo-600 rounded-full"></div>
+            <h3 class="text-2xl font-black text-slate-900">Product Catalog</h3>
+         </div>
+         <div class="flex items-center gap-4">
+            <div class="relative">
+               <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+               </span>
+               <input type="text" placeholder="Search catalog..." class="pl-12 pr-6 py-3 bg-white border border-slate-200 rounded-2xl text-sm focus:ring-4 focus:ring-indigo-50 outline-none w-64 transition-all" />
+            </div>
+         </div>
       </div>
 
       @if (loading) {
-         <div class="flex-1 flex flex-col items-center justify-center py-20 gap-4">
-            <div class="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
+         <div class="flex-1 flex flex-col items-center justify-center py-32 gap-6">
+            <div class="w-16 h-16 border-[6px] border-indigo-50 border-t-indigo-600 rounded-full animate-spin"></div>
+            <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">Synchronizing Database...</p>
          </div>
       } @else {
          <div class="overflow-x-auto">
             <table class="w-full text-left">
                <thead>
                   <tr class="bg-slate-50/50">
-                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Product</th>
-                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Category</th>
-                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Stock</th>
-                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Price</th>
-                     <th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 text-right">Actions</th>
+                     <th class="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Product Details</th>
+                     <th class="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Category</th>
+                     <th class="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Inventory Level</th>
+                     <th class="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Unit Price</th>
+                     <th class="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Operations</th>
                   </tr>
                </thead>
                <tbody class="divide-y divide-slate-50">
                   @for (item of paginatedData; track item.id) {
-                     <tr class="hover:bg-indigo-50/30 transition-colors group">
-                        <td class="px-8 py-5">
-                           <div class="flex items-center gap-3">
-                              <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center font-bold text-indigo-600 text-xs">
-                                 {{ item.name.substring(0,2).toUpperCase() }}
+                     <tr class="hover:bg-indigo-50/20 transition-all duration-300 group">
+                        <td class="px-10 py-7">
+                           <div class="flex items-center gap-5">
+                              <div class="w-14 h-14 rounded-[1.25rem] bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-100 group-hover:scale-110 transition-all duration-500">
+                                 @if (item.imageUrl) {
+                                    <img [src]="'http://localhost:5122' + item.imageUrl" class="w-full h-full object-cover">
+                                 } @else {
+                                    <span class="font-black text-indigo-600 text-sm">{{ item.name.substring(0,2).toUpperCase() }}</span>
+                                 }
                               </div>
-                              <span class="font-bold text-slate-900">{{ item.name }}</span>
+                              <div>
+                                 <span class="block font-black text-slate-900 text-lg">{{ item.name }}</span>
+                                 <span class="text-slate-400 text-xs font-medium">SKU: PROD-{{ item.id }}</span>
+                              </div>
                            </div>
                         </td>
-                        <td class="px-8 py-5 text-sm font-bold text-slate-500">{{ item.category?.name || 'N/A' }}</td>
-                        <td class="px-8 py-5">
-                           <span class="px-3 py-1 text-[10px] font-black rounded-lg" [ngClass]="item.stockQuantity > 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'">
-                              {{ item.stockQuantity }} units
+                        <td class="px-10 py-7">
+                           <span class="px-4 py-1.5 bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-lg">
+                              {{ item.category?.name || 'Uncategorized' }}
                            </span>
                         </td>
-                        <td class="px-8 py-5 font-bold text-slate-900">{{ item.price | currency }}</td>
-                        <td class="px-8 py-5 text-right relative">
-                           <button (click)="toggleMenu(item, $event)" class="text-slate-300 hover:text-slate-600 p-2">⋮</button>
+                        <td class="px-10 py-7">
+                           <div class="flex flex-col gap-2">
+                              <div class="flex justify-between items-center w-32">
+                                 <span class="text-xs font-bold" [ngClass]="item.stockQuantity > 20 ? 'text-emerald-500' : 'text-amber-500'">{{ item.stockQuantity }} Units</span>
+                                 <span class="text-[10px] text-slate-400 font-bold">{{ Math.min(100, (item.stockQuantity / 100) * 100) | number:'1.0-0' }}%</span>
+                              </div>
+                              <div class="w-32 h-2 bg-slate-100 rounded-full overflow-hidden">
+                                 <div class="h-full transition-all duration-1000" 
+                                      [ngStyle]="{'width': Math.min(100, (item.stockQuantity / 100) * 100) + '%'}"
+                                      [ngClass]="item.stockQuantity > 20 ? 'bg-emerald-500' : 'bg-amber-500'"></div>
+                              </div>
+                           </div>
+                        </td>
+                        <td class="px-10 py-7 font-black text-slate-900 text-lg">{{ item.price | currency }}</td>
+                        <td class="px-10 py-7 text-right relative">
+                           <button (click)="toggleMenu(item, $event)" class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-300 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                           </button>
                            @if (openedItem === item) {
-                              <div class="absolute right-8 top-12 bg-white border border-slate-200 shadow-2xl rounded-2xl w-40 z-50 py-3">
-                                 <button (click)="view(item)" class="flex items-center gap-3 w-full px-5 py-2.5 hover:bg-slate-50 text-sm font-bold text-slate-600">👁️ View</button>
-                                 <button (click)="edit(item)" class="flex items-center gap-3 w-full px-5 py-2.5 hover:bg-slate-50 text-sm font-bold text-slate-600">✏️ Edit</button>
-                                 <button (click)="delete(item)" class="flex items-center gap-3 w-full px-5 py-2.5 text-red-500 hover:bg-red-50 text-sm font-bold">🗑️ Delete</button>
+                              <div class="absolute right-10 top-16 bg-white/80 backdrop-blur-xl border border-white shadow-2xl rounded-[2rem] w-48 z-50 py-4 p-2 animate-in fade-in zoom-in-95 duration-200">
+                                 <button (click)="view(item)" class="flex items-center gap-3 w-full px-5 py-3 hover:bg-indigo-50 rounded-2xl text-sm font-bold text-slate-600 transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    View Details
+                                 </button>
+                                 <button (click)="edit(item)" class="flex items-center gap-3 w-full px-5 py-3 hover:bg-indigo-50 rounded-2xl text-sm font-bold text-slate-600 transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    Edit Item
+                                 </button>
+                                 <div class="h-px bg-slate-100 my-2 mx-4"></div>
+                                 <button (click)="delete(item)" class="flex items-center gap-3 w-full px-5 py-3 text-rose-500 hover:bg-rose-50 rounded-2xl text-sm font-bold transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                    Remove Product
+                                 </button>
                               </div>
                            }
                         </td>
@@ -92,67 +153,116 @@
                </tbody>
             </table>
          </div>
+         
+         <!-- Pagination -->
+         <div class="p-10 border-t border-slate-50 flex justify-between items-center">
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Showing {{ paginatedData.length }} of {{ totalItems() }} products</p>
+            <div class="flex gap-2">
+               <button (click)="prevPage()" [disabled]="page === 1" class="p-2 border border-slate-100 rounded-xl hover:bg-slate-50 disabled:opacity-30 transition-all">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+               </button>
+               @for (p of getPagesArray(); track p) {
+                  <button (click)="goToPage(p)" 
+                          [ngClass]="page === p ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white text-slate-500 border border-slate-100'"
+                          class="w-10 h-10 rounded-xl font-bold text-xs transition-all">
+                     {{ p }}
+                  </button>
+               }
+               <button (click)="nextPage()" [disabled]="page === totalPages" class="p-2 border border-slate-100 rounded-xl hover:bg-slate-50 disabled:opacity-30 transition-all">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+               </button>
+            </div>
+         </div>
       }
    </div>
 </div>
 
+<!-- Premium Modal -->
 @if (showModal) {
-   <div class="fixed inset-0 flex items-center justify-center z-50 p-4">
-      <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" (click)="showModal=false"></div>
-      <div class="relative w-full max-w-lg bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden z-10">
-         <div class="px-10 pt-10 pb-6">
-            <div class="flex items-center justify-between mb-2">
-               <h2 class="text-3xl font-black text-slate-900 flex items-center gap-4">
-                  <div class="w-3 h-10 bg-indigo-600 rounded-full"></div>
-                  {{ modalMode === 'VIEW' ? 'View Product' : modalMode === 'EDIT' ? 'Edit Product' : 'New Product' }}
-               </h2>
-               <button (click)="showModal=false" class="w-10 h-10 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-full text-slate-400">✕</button>
-            </div>
+   <div class="fixed inset-0 flex items-center justify-center z-[100] p-6">
+      <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-xl animate-in fade-in duration-500" (click)="showModal=false"></div>
+      <div class="relative w-full max-w-2xl bg-white/90 backdrop-blur-2xl rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border border-white overflow-hidden z-10 animate-in zoom-in-95 slide-in-from-bottom-10 duration-500">
+         
+         <div class="absolute top-0 right-0 p-8">
+            <button (click)="showModal=false" class="w-14 h-14 flex items-center justify-center bg-slate-100 hover:bg-rose-50 hover:text-rose-500 rounded-full text-slate-400 transition-all duration-300">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
          </div>
 
-         <div class="px-10 pb-10 space-y-4">
-            <div>
-               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Product Name</label>
-               <input [(ngModel)]="form.name" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50 p-4 rounded-2xl text-slate-900 font-bold outline-none border-2 border-transparent focus:border-indigo-500 transition-all" />
+         <div class="p-16">
+            <div class="mb-12">
+               <div class="flex items-center gap-4 mb-3">
+                  <div class="w-2 h-10 bg-indigo-600 rounded-full"></div>
+                  <h2 class="text-4xl font-black text-slate-900 tracking-tight">
+                     {{ modalMode === 'VIEW' ? 'Product Info' : modalMode === 'EDIT' ? 'Update Unit' : 'New Entry' }}
+                  </h2>
+               </div>
+               <p class="text-slate-500 font-medium ml-6">Fill in the details to manage your inventory record.</p>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+               <div class="col-span-2 flex gap-8 items-center">
+                  <div class="w-32 h-32 rounded-[2.5rem] bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden relative group shrink-0">
+                     @if (form.imageUrl) {
+                        <img [src]="'http://localhost:5122' + form.imageUrl" class="w-full h-full object-cover">
+                     } @else {
+                        <span class="text-4xl text-slate-200">📦</span>
+                     }
+                     @if (modalMode !== 'VIEW') {
+                        <input type="file" (change)="onFileSelected($event)" class="absolute inset-0 opacity-0 cursor-pointer z-10">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                           <span class="text-white text-[10px] font-bold uppercase">Change</span>
+                        </div>
+                     }
+                  </div>
+                  <div class="flex-1">
+                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 mb-3 block">Product Designation</label>
+                     <input [(ngModel)]="form.name" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50/50 p-6 rounded-[2rem] text-slate-900 font-bold text-xl outline-none border-2 border-transparent focus:border-indigo-500 focus:bg-white transition-all shadow-inner" placeholder="iPhone 15 Pro Max..." />
+                  </div>
+               </div>
+
                <div>
-                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Category</label>
-                  <select [(ngModel)]="form.categoryId" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50 p-4 rounded-2xl text-slate-900 font-bold outline-none border-2 border-transparent focus:border-indigo-500">
-                     <option [value]="0" disabled>Select Category</option>
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 mb-3 block">Category</label>
+                  <select [(ngModel)]="form.categoryId" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50/50 p-6 rounded-[2rem] text-slate-900 font-bold outline-none border-2 border-transparent focus:border-indigo-500 focus:bg-white transition-all shadow-inner appearance-none">
+                     <option [ngValue]="0" disabled>Classification...</option>
                      @for (cat of categories(); track cat.id) {
-                        <option [value]="cat.id">{{ cat.name }}</option>
+                        <option [ngValue]="cat.id">{{ cat.name }}</option>
                      }
                   </select>
                </div>
-               <div>
-                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Supplier</label>
-                  <select [(ngModel)]="form.supplierId" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50 p-4 rounded-2xl text-slate-900 font-bold outline-none border-2 border-transparent focus:border-indigo-500">
-                     <option [value]="0" disabled>Select Supplier</option>
-                     @for (sup of suppliers(); track sup.id) {
-                        <option [value]="sup.id">{{ sup.name }}</option>
-                     }
-                  </select>
-               </div>
-            </div>
 
-            <div class="grid grid-cols-2 gap-4">
                <div>
-                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Stock Quantity</label>
-                  <input type="number" [(ngModel)]="form.stockQuantity" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50 p-4 rounded-2xl text-indigo-600 font-black text-xl outline-none border-2 border-transparent focus:border-indigo-500" />
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 mb-3 block">Primary Supplier</label>
+                  <select [(ngModel)]="form.supplierId" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50/50 p-6 rounded-[2rem] text-slate-900 font-bold outline-none border-2 border-transparent focus:border-indigo-500 focus:bg-white transition-all shadow-inner appearance-none">
+                     <option [ngValue]="0" disabled>Select Provider...</option>
+                     @for (sup of suppliers(); track sup.id) {
+                        <option [ngValue]="sup.id">{{ sup.name }}</option>
+                     }
+                  </select>
                </div>
+
                <div>
-                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Unit Price ($)</label>
-                  <input type="number" [(ngModel)]="form.price" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50 p-4 rounded-2xl text-indigo-600 font-black text-xl outline-none border-2 border-transparent focus:border-indigo-500" />
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 mb-3 block">Stock Volume</label>
+                  <div class="relative">
+                     <input type="number" [(ngModel)]="form.stockQuantity" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50/50 p-6 rounded-[2rem] text-indigo-600 font-black text-2xl outline-none border-2 border-transparent focus:border-indigo-500 focus:bg-white transition-all shadow-inner" />
+                     <span class="absolute right-8 top-1/2 -translate-y-1/2 text-slate-300 font-bold">Units</span>
+                  </div>
+               </div>
+
+               <div>
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 mb-3 block">Market Value</label>
+                  <div class="relative">
+                     <span class="absolute left-8 top-1/2 -translate-y-1/2 text-indigo-600 font-black text-2xl">$</span>
+                     <input type="number" [(ngModel)]="form.price" [disabled]="modalMode === 'VIEW'" class="w-full bg-slate-50/50 pl-14 p-6 rounded-[2rem] text-indigo-600 font-black text-2xl outline-none border-2 border-transparent focus:border-indigo-500 focus:bg-white transition-all shadow-inner" />
+                  </div>
                </div>
             </div>
 
             @if (modalMode !== 'VIEW') {
-               <div class="pt-4 flex gap-4">
-                  <button (click)="showModal=false" class="flex-1 py-4 font-black text-slate-400 hover:bg-slate-50 rounded-2xl text-xs uppercase tracking-widest">Discard</button>
-                  <button (click)="save()" class="flex-[2] py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl shadow-xl text-xs uppercase tracking-widest">
-                     {{ modalMode === 'EDIT' ? 'Save Changes' : 'Confirm & Add' }}
+               <div class="mt-16 flex gap-6">
+                  <button (click)="showModal=false" class="flex-1 py-6 font-black text-slate-400 hover:bg-slate-50 rounded-[2rem] text-xs uppercase tracking-[0.2em] transition-all">Discard Changes</button>
+                  <button (click)="save()" class="flex-[1.5] py-6 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-black rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(79,70,229,0.4)] text-xs uppercase tracking-[0.2em] transition-all active:scale-95">
+                     {{ modalMode === 'EDIT' ? 'Synchronize Data' : 'Initialize Product' }}
                   </button>
                </div>
             }

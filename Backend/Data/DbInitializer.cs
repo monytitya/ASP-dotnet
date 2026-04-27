@@ -9,7 +9,6 @@ public static class DbInitializer
         using var conn = new MySqlConnection(connectionString);
         await conn.OpenAsync();
 
-        // 1. Existing App Tables
         await Execute(conn, """
             CREATE TABLE IF NOT EXISTS Inventories (
                 Id          INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -22,12 +21,17 @@ public static class DbInitializer
 
         await Execute(conn, """
             CREATE TABLE IF NOT EXISTS Employees (
-                Id     INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                Name   VARCHAR(100)  NOT NULL,
-                Email  VARCHAR(150)  NOT NULL,
-                Salary DECIMAL(18,2) NOT NULL DEFAULT 0
+                Id        INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                Name      VARCHAR(100)  NOT NULL,
+                Email     VARCHAR(150)  NOT NULL,
+                Salary    DECIMAL(18,2) NOT NULL DEFAULT 0,
+                image_url VARCHAR(500)  NULL
             );
             """);
+
+        // Ensure image_url column exists in existing tables
+        try { await Execute(conn, "ALTER TABLE Employees ADD COLUMN image_url VARCHAR(500) NULL;"); } catch { }
+        try { await Execute(conn, "ALTER TABLE Products ADD COLUMN image_url VARCHAR(500) NULL;"); } catch { }
 
         await Execute(conn, """
             CREATE TABLE IF NOT EXISTS Roles (
@@ -54,12 +58,10 @@ public static class DbInitializer
                 (3, 'Employee');
             """);
 
-        // 2. Execute new Sales & Inventory tables from SQL file
         var sqlFilePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.FullName, "inventory_db.sql");
         if (File.Exists(sqlFilePath))
         {
             var sqlCommands = await File.ReadAllTextAsync(sqlFilePath);
-            // MySqlConnector allows multiple statements by default in the same command if configured, or we just execute it directly
             using var cmd = new MySqlCommand(sqlCommands, conn);
             try
             {
