@@ -48,7 +48,10 @@ export class EmployeeComponent implements OnInit {
         this.empObj.set(data);
         this.calculateStats(data);
       },
-      error: err => console.error(err),
+      error: err => {
+        console.error(err);
+        alert('Failed to load employees: ' + (err.message || 'Unknown error'));
+      },
       complete: () => this.loading = false
     });
   }
@@ -111,7 +114,10 @@ export class EmployeeComponent implements OnInit {
         this.form = res;
         this.showModal = true;
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        alert('Failed to fetch employee details: ' + (err.error?.message || err.message));
+      }
     });
 
     this.openedItem = null;
@@ -125,7 +131,10 @@ export class EmployeeComponent implements OnInit {
         this.form = res;
         this.showModal = true;
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+        alert('Failed to fetch employee details: ' + (err.error?.message || err.message));
+      }
     });
 
     this.openedItem = null;
@@ -135,7 +144,10 @@ export class EmployeeComponent implements OnInit {
     if (confirm('Delete this employee?')) {
       this.service.delete(item.id).subscribe({
         next: () => this.loadData(),
-        error: err => console.error(err)
+        error: err => {
+          console.error(err);
+          alert('Failed to delete employee: ' + (err.error?.message || err.message));
+        }
       });
     }
   }
@@ -147,7 +159,10 @@ export class EmployeeComponent implements OnInit {
           this.loadData();
           this.showModal = false;
         },
-        error: err => console.error(err)
+        error: err => {
+          console.error(err);
+          alert('Failed to update employee: ' + (err.error?.message || err.message));
+        }
       });
     } else {
       this.service.save(this.form).subscribe({
@@ -155,7 +170,10 @@ export class EmployeeComponent implements OnInit {
           this.loadData();
           this.showModal = false;
         },
-        error: err => console.error(err)
+        error: err => {
+          console.error(err);
+          alert('Failed to save employee: ' + (err.error?.message || err.message));
+        }
       });
     }
   }

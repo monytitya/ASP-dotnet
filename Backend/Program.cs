@@ -37,8 +37,7 @@ builder.Services.AddResponseCompression(options =>
 var connStr = builder.Configuration.GetConnectionString("MySqlDb")!;
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connStr, ServerVersion.AutoDetect(connStr))
-           .EnableSensitiveDataLogging(false) 
-           .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)); 
+           .EnableSensitiveDataLogging(false)); 
 
 var app = builder.Build();
 

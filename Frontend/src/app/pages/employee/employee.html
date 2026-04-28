@@ -13,14 +13,14 @@
          </div>
          <button (click)="addNew()"
             class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-200 active:scale-95 flex items-center gap-2">
-            <span class="text-xl">+</span> Export
+            <span class="text-xl">+</span> Add Employee
          </button>
       </div>
    </div>
 
-   <!-- STATS CARDS -->
+
    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Total Employees -->
+
       <div
          class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
          <div class="flex justify-between items-start mb-4">
@@ -117,16 +117,18 @@
                   @for (item of paginatedData; track item.id) {
                   <tr class="hover:bg-blue-50/30 transition-colors group">
                      <td class="px-8 py-5">
-                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-100">
-                               @if (item.imageUrl) {
-                                  <img [src]="'http://localhost:5122' + item.imageUrl" class="w-full h-full object-cover">
-                               } @else {
-                                  <span class="font-bold text-blue-600 text-xs">{{ item.name.substring(0,2).toUpperCase() }}</span>
-                               }
-                            </div>
-                            <span class="font-bold text-slate-900">{{ item.name }}</span>
-                         </div>
+                        <div class="flex items-center gap-3">
+                           <div
+                              class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-100">
+                              @if (item.imageUrl) {
+                              <img [src]="'http://localhost:5122' + item.imageUrl" class="w-full h-full object-cover">
+                              } @else {
+                              <span class="font-bold text-blue-600 text-xs">{{ item.name.substring(0,2).toUpperCase()
+                                 }}</span>
+                              }
+                           </div>
+                           <span class="font-bold text-slate-900">{{ item.name }}</span>
+                        </div>
                      </td>
                      <td class="px-8 py-5 text-slate-500 font-medium text-sm">{{ item.email }}</td>
                      <td class="px-8 py-5">
@@ -275,26 +277,29 @@
       </div>
 
       <div class="px-10 pb-10 space-y-6">
-          <div class="flex items-center gap-6 mb-6">
-             <div class="w-24 h-24 rounded-3xl bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden relative group">
-                @if (form.imageUrl) {
-                   <img [src]="'http://localhost:5122' + form.imageUrl" class="w-full h-full object-cover">
-                } @else {
-                   <span class="text-3xl text-slate-200">📸</span>
-                }
-                @if (modalMode !== 'VIEW') {
-                   <input type="file" (change)="onFileSelected($event)" class="absolute inset-0 opacity-0 cursor-pointer z-10">
-                   <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                      <span class="text-white text-[10px] font-bold uppercase">Change</span>
-                   </div>
-                }
-             </div>
-             <div class="flex-1">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
-                <input [(ngModel)]="form.name" [disabled]="modalMode === 'VIEW'" placeholder="e.g. Eleanor Pena"
-                   class="w-full bg-slate-50 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-2xl px-6 py-4 text-slate-900 font-bold outline-none transition-all disabled:opacity-50" />
-             </div>
-          </div>
+         <div class="flex items-center gap-6 mb-6">
+            <div
+               class="w-24 h-24 rounded-3xl bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden relative group">
+               @if (form.imageUrl) {
+               <img [src]="'http://localhost:5122' + form.imageUrl" class="w-full h-full object-cover">
+               } @else {
+               <span class="text-3xl text-slate-200">📸</span>
+               }
+               @if (modalMode !== 'VIEW') {
+               <input type="file" (change)="onFileSelected($event)"
+                  class="absolute inset-0 opacity-0 cursor-pointer z-10">
+               <div
+                  class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <span class="text-white text-[10px] font-bold uppercase">Change</span>
+               </div>
+               }
+            </div>
+            <div class="flex-1">
+               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
+               <input [(ngModel)]="form.name" [disabled]="modalMode === 'VIEW'" placeholder="e.g. Eleanor Pena"
+                  class="w-full bg-slate-50 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-2xl px-6 py-4 text-slate-900 font-bold outline-none transition-all disabled:opacity-50" />
+            </div>
+         </div>
          <div class="space-y-2">
             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
             <input [(ngModel)]="form.email" [disabled]="modalMode === 'VIEW'" placeholder="eleanor@example.com"

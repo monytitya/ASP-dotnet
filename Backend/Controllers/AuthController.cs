@@ -22,8 +22,7 @@ public class AuthController : ControllerBase
         
         if (account == null)
             return Unauthorized(new { message = "Invalid username or password." });
-
-        // Returning user details (no JWT for basic setup)
+ 
         return Ok(new { 
             message = "Login successful", 
             account = new { 

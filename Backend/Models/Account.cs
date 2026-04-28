@@ -1,13 +1,29 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Backend.Models;
 
+[Table("accounts")]
 public class Account
 {
-    public int    Id       { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
-    public string Email    { get; set; } = string.Empty;
-    public int    RoleId   { get; set; }
+    [Key]
+    [Column("id")]
+    public int Id { get; set; }
 
-    // Read-only: populated on GET, ignored on POST/PUT
+    [Required]
+    [Column("username")]
+    public string Username { get; set; } = string.Empty;
+
+    [Required]
+    [Column("password")]
+    public string Password { get; set; } = string.Empty;
+
+    [Column("email")]
+    public string Email { get; set; } = string.Empty;
+
+    [Column("role_id")]
+    public int RoleId { get; set; }
+
+    [NotMapped]
     public string? RoleName { get; set; }
 }

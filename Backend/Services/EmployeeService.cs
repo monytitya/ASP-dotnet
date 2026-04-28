@@ -37,6 +37,7 @@ public class EmployeeService : IEmployeeService
             existing.Name = emp.Name;
             existing.Email = emp.Email;
             existing.Salary = emp.Salary;
+            existing.ImageUrl = emp.ImageUrl;
             await _context.SaveChangesAsync();
         }
     }

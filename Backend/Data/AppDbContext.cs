@@ -26,7 +26,6 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Product relations
         modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)
             .WithMany(c => c.Products)
@@ -39,7 +38,7 @@ public class AppDbContext : DbContext
             .HasForeignKey(p => p.SupplierId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Order relations
+       
         modelBuilder.Entity<Order>()
             .HasOne(o => o.Customer)
             .WithMany(c => c.Orders)
@@ -58,7 +57,7 @@ public class AppDbContext : DbContext
             .HasForeignKey(oi => oi.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Purchase relations
+    
         modelBuilder.Entity<Purchase>()
             .HasOne(p => p.Supplier)
             .WithMany()
@@ -76,5 +75,16 @@ public class AppDbContext : DbContext
             .WithMany(p => p.PurchaseItems)
             .HasForeignKey(pi => pi.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
+
+
+        modelBuilder.Entity<Employee>(entity =>
+        {
+            entity.ToTable("employees");
+            entity.Property(e => e.Id).HasColumnName("Id");
+            entity.Property(e => e.Name).HasColumnName("Name");
+            entity.Property(e => e.Email).HasColumnName("Email");
+            entity.Property(e => e.Salary).HasColumnName("Salary");
+            entity.Property(e => e.ImageUrl).HasColumnName("image_url");
+        });
     }
 }

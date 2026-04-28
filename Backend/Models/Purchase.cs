@@ -16,7 +16,6 @@ public class Purchase
     [Column("purchase_date")]
     public DateTime PurchaseDate { get; set; } = DateTime.UtcNow.Date;
 
-    // Navigation properties
     public Supplier? Supplier { get; set; }
     public ICollection<PurchaseItem> PurchaseItems { get; set; } = new List<PurchaseItem>();
 }
