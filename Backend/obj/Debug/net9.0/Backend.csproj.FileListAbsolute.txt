@@ -102,3 +102,8 @@ D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.csproj.Up2Date
 D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.dll
 D:\ASP_dotnet\Backend\obj\Debug\net9.0\refint\Backend.dll
 D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.pdb
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.deps.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.runtimeconfig.json
+D:\ASP_dotnet\Backend\bin\Debug\net9.0\Backend.pdb
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\Backend.genruntimeconfig.cache
+D:\ASP_dotnet\Backend\obj\Debug\net9.0\ref\Backend.dll
